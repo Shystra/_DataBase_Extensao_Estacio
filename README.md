@@ -1,6 +1,10 @@
 # Processamento e Visualização de Dados de Funcionários
 Este projeto tem como objetivo processar e visualizar dados de funcionários a partir de vários arquivos Excel. O foco está em calcular o quantitativo de funcionários por empresa, mês e ano, garantindo que cada funcionário seja contabilizado apenas uma vez por mês.
 
+# Resultado obtido:
+O grafico gerado apresenta grande redução de funcionários ao longo do período tratado.
+![image](https://github.com/user-attachments/assets/0ccea47b-75a1-452c-b2bd-4d9499d18e84)
+
 ## Requisitos
 Antes de rodar o script, certifique-se de que você tem as seguintes bibliotecas instaladas:
 
