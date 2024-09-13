@@ -4,9 +4,9 @@ Este projeto tem como objetivo processar e visualizar dados de funcionários a p
 ## Requisitos
 Antes de rodar o script, certifique-se de que você tem as seguintes bibliotecas instaladas:
 
-- ** pandas ** 
-- ** matplotlib ** 
-- ** openpyxl **
+- ** pandas ** -
+- ** matplotlib ** -
+- ** openpyxl ** -
 
 ## Instalação
 Para instalar as dependências, execute o seguinte comando:
@@ -17,8 +17,8 @@ Diretório de Dados: Os arquivos Excel contendo os dados estão localizados em u
 Colunas de Interesse: Empresa, Matrícula, Nome, e Data Referência são as colunas usadas para o processamento.
 
 # Funcionalidades
-O script faz o seguinte:
 
+## O script faz o seguinte:
 Carrega múltiplos arquivos Excel de um diretório especificado.
 Extrai as colunas relevantes dos arquivos Excel: Empresa, Matrícula, Nome, e Data Referência.
 Concatena os arquivos em um único DataFrame, unindo os dados de todas as planilhas.
@@ -41,6 +41,7 @@ Os arquivos são carregados de um diretório específico:
 
 `caminho_diretorio = r'\\172.21.48.102\d$\dev\dataBaseBI\Folha - Backup'`
 `dataframes = []`
+
 Para cada arquivo Excel no diretório, o código extrai as colunas Empresa, Matrícula, Nome, e Data Referência:
 
 `for caminho_arquivo in glob.glob(os.path.join(caminho_diretorio, '*.xlsx')):`
@@ -53,20 +54,23 @@ Para cada arquivo Excel no diretório, o código extrai as colunas Empresa, Matr
         `print(f"Erro ao processar o arquivo {caminho_arquivo}: {e}")`
         
 ## 3. Concatenação e Criação de Identificador
+
 Os dados de todos os arquivos são concatenados e é criado um identificador único para cada funcionário, combinando Matrícula e Nome:`
 
-dados_concatenados = pd.concat(dataframes, ignore_index=True)
-dados_concatenados['Identificador'] = dados_concatenados['Matrícula'].astype(str) + '-' + dados_concatenados['Nome']
+`dados_concatenados = pd.concat(dataframes, ignore_index=True)`
+`dados_concatenados['Identificador'] = dados_concatenados['Matrícula'].astype(str) + '-' + dados_concatenados['Nome']`
 
 ## 4. Conversão da Data e Remoção de Duplicatas
+
 A coluna Data Referência é convertida para um formato de data. Além disso, criamos colunas separadas para o Ano e o Mês:
 
-dados_concatenados['Data Referência'] = pd.to_datetime(dados_concatenados['Data Referência'], dayfirst=True, errors='coerce')
-dados_concatenados['Ano'] = dados_concatenados['Data Referência'].dt.year
-dados_concatenados['Mês'] = dados_concatenados['Data Referência'].dt.month
-Removemos duplicatas para garantir que cada funcionário seja contado apenas uma vez por mês:
+`dados_concatenados['Data Referência'] = pd.to_datetime(dados_concatenados['Data Referência'], dayfirst=True, errors='coerce')`
+`dados_concatenados['Ano'] = dados_concatenados['Data Referência'].dt.year`
+`dados_concatenados['Mês'] = dados_concatenados['Data Referência'].dt.month`
 
-dados_unicos = dados_concatenados.drop_duplicates(subset=['Identificador', 'Ano', 'Mês'])
+## Removemos duplicatas para garantir que cada funcionário seja contado apenas uma vez por mês:
+
+`dados_unicos = dados_concatenados.drop_duplicates(subset=['Identificador', 'Ano', 'Mês'])`
 
 ## 5. Agrupamento e Cálculo de Funcionários
 Agrupamos os dados por Empresa, Ano e Mês para calcular o total de funcionários únicos:
@@ -92,13 +96,15 @@ Por fim, exibimos o quantitativo de funcionários processado:
 
 `print(quantitativo_funcionarios)`
 
-Como Usar
+## Como Usar
 Coloque os arquivos Excel no diretório especificado.
 Execute o script para gerar o gráfico e ver os dados processados.
 Os dados processados serão impressos no console, e o gráfico exibirá o período com o maior número de funcionários.
-Exemplo de Saída
+
+## Exemplo de Saída
 
 `Empresa      Ano  Mês  Total Funcionários`
 `Empresa A    2023   4          1700`
 `Empresa B    2024   8          1713`
+
 O gráfico exibirá o período com o maior número de funcionários, organizando por ano e mês.
